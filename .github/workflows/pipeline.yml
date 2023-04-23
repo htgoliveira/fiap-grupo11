@@ -10,6 +10,7 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
+    environment: env-deploy
     steps:
       - name: Download do Repositório
         uses: actions/checkout@v3 # https://github.com/actions/checkout
@@ -35,15 +36,15 @@ jobs:
       #  env:
       #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      #- name: Docker Login
-      #  run: |
-      #    echo '${{ secrets.GOOGLE_CREDENTIALS }}' > key.json
-      #    cat key.json | docker login -u _json_key --password-stdin '${{ vars.GOOGLE_ARTIFACT }}'
-  #
-  #- name: Build & Push Image
-  #  run: |
-  #    docker build -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest .
-  #    docker push ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest
+      - name: Docker Login
+        run: |
+          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > key.json
+          cat key.json | docker login -u _json_key --password-stdin '${{ vars.GOOGLE_ARTIFACT }}'
+
+      - name: Build & Push Image
+        run: |
+          docker build -t ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest .
+          docker push ${{ vars.GOOGLE_ARTIFACT }}/${{ vars.GOOGLE_PROJECT_ID }}/${{ vars.GOOGLE_REPONAME }}/${{ vars.GOOGLE_MYAPP }}:latest
 
   #Deploy-Homolog:
   #  needs: Build
