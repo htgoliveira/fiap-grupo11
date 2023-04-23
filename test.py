@@ -2,6 +2,7 @@
 from app import app
 import unittest
 
+
 class Test(unittest.TestCase):
     def setUp(self):
         # cria uma instância do unittest, precisa do nome "setUp"
@@ -16,4 +17,5 @@ class Test(unittest.TestCase):
 
     def test_conteudo(self):
         # verifica o retorno do conteudo da pagina
-        self.assertEqual(self.result.data.decode('utf-8'), "Laboratório Pipeline DevOps - vFinal")
+        self.assertEqual(self.result.data.decode('utf-8'),
+                         "Laboratório Pipeline DevOps - v1")
